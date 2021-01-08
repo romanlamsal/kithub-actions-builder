@@ -13,27 +13,13 @@ workflow("build-service-1") {
         checkout()
 
         step("Install dependencies") {
-            run = "yarn install"
+            run("yarn install")
         }
 
-        step("Build javascript") {
-            run = "yarn build"
-        }
-
-        step("Build docker") {
-            run = "docker build -t something:else ."
-        }
-
-        step("Push docker") {
-            run = "docker push something:else"
-        }
 
         // has no name
         step {
-            run = """
-                echo "hallo wie geht's?"
-                echo "danke gut."
-            """.trimIndent()
+            run("""echo "hallo wie geht's?"""", """echo "danke gut."""")
         }
 
         step("Uses uses with with") {
@@ -62,12 +48,6 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: yarn install
-      - name: Build javascript
-        run: yarn build
-      - name: Build docker
-        run: docker build -t something:else .
-      - name: Push docker
-        run: docker push something:else
       - run: |
           echo "hallo wie geht's?"
           echo "danke gut."
