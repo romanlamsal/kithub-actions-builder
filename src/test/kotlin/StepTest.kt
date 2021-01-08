@@ -11,22 +11,95 @@ internal class StepTest {
 
         // when
         val step = Step()
-        step.run = run
+        step.runCommands.add(run)
 
         // then
         assert(step.toString()).isEqualTo("- run: $run")
     }
 
     @Test
-    fun `should return step with name`() {
+    fun `should throw when step has neither 'uses' nor 'run' return step with name`() {
         // given
         val name = "awesome-name"
 
         // when
-        val step = Step(name = name)
+        val throwingToString = { Step(name = name).toString() }
 
         // then
-        assert(step.toString()).isEqualTo("- name: $name")
+        assert(throwingToString).thrownError { }
+    }
+
+    @Test
+    fun `should return step with name and single-line run`() {
+        // given
+        val name = "awesome-name"
+        val runCommand = "exit 0"
+
+        // when
+        val step = Step(name = name).apply { run(runCommand) }
+
+        // then
+        assert(step.toString()).isEqualTo(
+            """
+            - name: $name
+              run: $runCommand
+        """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `should correctly split multiline command`() {
+        // given
+        val runCommands = listOf("exit 0", "exit 1")
+
+        // when
+        val step = Step().apply { run(runCommands.joinToString(separator = "\n")) }
+
+        // then
+        assert(step.toString()).isEqualTo(
+            """
+            - run: |
+                ${runCommands[0]}
+                ${runCommands[1]}
+        """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `should correctly split multiple single-line commands`() {
+        // given
+        val runCommands = listOf("exit 0", "exit 1")
+
+        // when
+        val step = Step().apply { run(*runCommands.toTypedArray()) }
+
+        // then
+        assert(step.toString()).isEqualTo(
+            """
+            - run: |
+                ${runCommands[0]}
+                ${runCommands[1]}
+        """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `should correctly split multiple single- and multi-line commands`() {
+        // given
+        val runCommands = listOf("exit 0", "exit 1\nexit 2")
+
+        // when
+        val step = Step().apply { run(*runCommands.toTypedArray()) }
+
+        // then
+        assert(step.toString()).isEqualTo(
+            """
+            - run: |
+                exit 0
+                exit 1
+                exit 2
+        """.trimIndent()
+        )
     }
 
     @Test
@@ -36,7 +109,7 @@ internal class StepTest {
         val run = "echo 'so great'"
 
         // when
-        val step = Step(name = name).apply { this.run = run }
+        val step = Step(name = name).apply { this.runCommands.add(run) }
 
         // then
         assert(step.toString()).isEqualTo(

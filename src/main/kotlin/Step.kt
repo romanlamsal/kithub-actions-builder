@@ -1,34 +1,30 @@
 open class Step(
     private val name: String? = null,
 ) : BlockElement() {
-    var run: String? = null
+    var runCommands: MutableList<String> = emptyList<String>().toMutableList()
     var uses: Uses? = null
 
     fun uses(name: String, c: Uses.() -> Unit = {}) {
         uses = Uses(name).apply(c)
     }
 
+    fun run(vararg commands: String) {
+        runCommands.addAll(commands.flatMap { it.lines() })
+    }
+
     override fun toString(): String {
-        val nameLine = if (name != null) "name: $name" else ""
-        val runLines: String = run.let {
-            return@let if (it == null)
-                ""
-            else {
-                val numLines: Int = it.lines().size
-                "run: " + if (numLines > 1) {
-                    "|\n" + it.indentBlock()
-                } else {
-                    it
-                }
-            }
+        assert(uses != null || runCommands.isNotEmpty())
+
+        val builder = StringBuilder()
+
+        if (name != null) builder.append("name: $name\n")
+        if (uses != null) builder.append(uses.toString())
+        when (runCommands.size) {
+            0 -> builder.append("")
+            1 -> builder.append("run: ${runCommands[0]}")
+            else -> builder.append("run: |\n" + runCommands.joinToString(separator = "\n").indentBlock())
         }
 
-        val usesLines = uses?.toString() ?: ""
-
-        val stepBlock = listOf(nameLine, runLines, usesLines)
-            .filter { it.isNotEmpty() }
-            .joinToString(separator = "\n")
-
-        return stepBlock.indentBlock().replaceFirst(" ", "-")
+        return builder.toString().indentBlock().replaceFirst(" ", "-")
     }
 }

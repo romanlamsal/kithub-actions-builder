@@ -42,12 +42,12 @@ internal class JobTest {
         val jobName = "build"
         val runsOn = "ubuntuhuhu"
         val stepName = "install"
-        val run = "exit 0"
+        val runCommand = "exit 0"
 
         // when
         val job = Job(name = jobName, runsOn = runsOn).apply {
             step(stepName) {
-                this.run = run
+                run(runCommand)
             }
         }
 
@@ -58,7 +58,7 @@ internal class JobTest {
               runs-on: $runsOn
               steps:
                 - name: $stepName
-                  run: $run
+                  run: $runCommand
         """.trimIndent()
         )
     }
