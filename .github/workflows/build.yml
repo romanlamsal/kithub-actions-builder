@@ -1,0 +1,13 @@
+name: build-service-1
+
+jobs:
+  build-service-1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: ./gradlew install
+      - name: Run tests
+        run: ./gradlew test
+      - name: Build library
+        run: ./gradlew build
