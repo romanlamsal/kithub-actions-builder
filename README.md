@@ -8,17 +8,17 @@ and contextual hints, thanks to Kotlin.
 The following piece of code:
 ```kotlin
 workflow("build-service-1") {
+    on {
+        push()
+    }
+
     job("build-service-1") {
-        on {
-            push()
-        }
 
         checkout()
 
         step("Install dependencies") {
             run("yarn install")
         }
-
 
         // has no name
         step {
@@ -36,7 +36,6 @@ workflow("build-service-1") {
             uses("actions/bar@v1")
         }
     }
-}
 ```
 
 will produce a ``String`` containing the following:
