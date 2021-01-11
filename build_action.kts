@@ -7,12 +7,12 @@
 
 fun gradlew(command: String) = "./gradlew $command"
 
-workflow("build-service-1") {
+workflow("build") {
     on {
         push()
     }
 
-    job("build-service-1") {
+    job("build") {
 
         checkout()
 

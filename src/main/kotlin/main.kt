@@ -1,5 +1,9 @@
 fun main() {
     workflow("build-service-1") {
+        on {
+            push()
+        }
+
         job("build-service-1") {
 
             checkout()
@@ -7,7 +11,6 @@ fun main() {
             step("Install dependencies") {
                 run("yarn install")
             }
-
 
             // has no name
             step {

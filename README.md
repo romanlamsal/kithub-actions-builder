@@ -9,6 +9,9 @@ The following piece of code:
 ```kotlin
 workflow("build-service-1") {
     job("build-service-1") {
+        on {
+            push()
+        }
 
         checkout()
 
@@ -41,6 +44,8 @@ will produce a ``String`` containing the following:
 ````yaml
 name: build-service-1
 
+on: push
+
 jobs:
   build-service-1:
     runs-on: ubuntu-latest
@@ -57,4 +62,7 @@ jobs:
           foo: bar
       - name: Uses uses with with
         uses: actions/bar@v1
+
+Process finished with exit code 0
+
 ````
