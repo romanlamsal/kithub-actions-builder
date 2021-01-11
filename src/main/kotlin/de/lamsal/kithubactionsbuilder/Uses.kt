@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 data class Uses(
     var name: String,
 ) : BlockElement() {

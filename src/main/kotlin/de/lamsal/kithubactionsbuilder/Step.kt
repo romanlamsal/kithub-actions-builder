@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 open class Step(
     private val name: String? = null,
 ) : BlockElement() {

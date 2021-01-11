@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 @DslMarker
 annotation class ActionElement
 

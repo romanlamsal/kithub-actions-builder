@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 class On : BlockElement() {
     lateinit var event: String
 

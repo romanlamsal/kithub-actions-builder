@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 import assertk.assert
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test

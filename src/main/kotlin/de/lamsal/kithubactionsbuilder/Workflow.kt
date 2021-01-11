@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 class Workflow(
     private val name: String,
 ) : BlockElement() {

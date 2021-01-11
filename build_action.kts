@@ -1,9 +1,9 @@
-//INCLUDE ./src/main/kotlin/BlockElement.kt
-//INCLUDE ./src/main/kotlin/On.kt
-//INCLUDE ./src/main/kotlin/Job.Kt
-//INCLUDE ./src/main/kotlin/Step.kt
-//INCLUDE ./src/main/kotlin/Uses.kt
-//INCLUDE ./src/main/kotlin/Workflow.kt
+//INCLUDE ./src/main/kotlin/de/lamsal/kithubactionsbuilder/BlockElement.kt
+//INCLUDE ./src/main/kotlin/de/lamsal/kithubactionsbuilder/On.kt
+//INCLUDE ./src/main/kotlin/de/lamsal/kithubactionsbuilder/Job.Kt
+//INCLUDE ./src/main/kotlin/de/lamsal/kithubactionsbuilder/Step.kt
+//INCLUDE ./src/main/kotlin/de/lamsal/kithubactionsbuilder/Uses.kt
+//INCLUDE ./src/main/kotlin/de/lamsal/kithubactionsbuilder/Workflow.kt
 
 fun gradlew(command: String) = "./gradlew $command"
 

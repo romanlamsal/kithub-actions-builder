@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 fun main() {
     workflow("build-service-1") {
         on {

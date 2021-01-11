@@ -1,3 +1,5 @@
+package de.lamsal.kithubactionsbuilder
+
 data class Job(
     var name: String? = null,
     var runsOn: String = "ubuntu-latest",
