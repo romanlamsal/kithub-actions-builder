@@ -27,5 +27,9 @@ workflow("build") {
         step("Build library") {
             run(gradlew("build"))
         }
+
+        step("Publish") {
+            run(gradlew("publish -Pusername=GitHub -Ptoken=\${{ secrets.GITHUB_TOKEN }}"))
+        }
     }
 }.also { println(it) }

@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.4.21"
     application
+    `maven-publish`
 }
 
 group = "com.github.romanlamsal"
@@ -25,10 +26,28 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<KotlinCompile>() {
+tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
 application {
     mainClassName = "MainKt"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/romanlamsal/kithub-actions-builder")
+            credentials {
+                username = project.findProperty("username") as String? ?: ""
+                password = project.findProperty("token") as String? ?: ""
+            }
+        }
+    }
+    publications {
+        register("gpr", MavenPublication::class.java) {
+            from(components["java"])
+        }
+    }
 }
