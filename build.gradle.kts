@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "de.lamsal"
-version = "1.0"
+version = project.findProperty("version") ?: "1.0"
 
 repositories {
     mavenCentral()
@@ -29,10 +29,6 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
-}
-
-application {
-    mainClassName = "MainKt"
 }
 
 publishing {

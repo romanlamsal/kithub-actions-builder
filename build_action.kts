@@ -29,7 +29,10 @@ workflow("build") {
         }
 
         step("Publish") {
-            run(gradlew("publish -Pusername=GitHub -Ptoken=\${{ secrets.GITHUB_TOKEN }}"))
+            val username = "GitHub"
+            val token = "\${{ secrets.GITHUB_TOKEN }}"
+            val version = "1.0.\${{ github.run_number }}"
+            run(gradlew("publish -Pusername=$username -Ptoken=$token -Pversion=$version"))
         }
     }
 }.also { println(it) }

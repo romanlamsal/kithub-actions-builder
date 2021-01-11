@@ -14,4 +14,4 @@ jobs:
       - name: Build library
         run: ./gradlew build
       - name: Publish
-        run: ./gradlew publish -Pusername=GitHub -Ptoken=${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew publish -Pusername=GitHub -Ptoken=${{ secrets.GITHUB_TOKEN }} -Pversion=1.0.${{ github.run_number }}
