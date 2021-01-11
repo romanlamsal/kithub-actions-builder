@@ -12,6 +12,10 @@ internal class WorkflowTest {
 
         // when
         val fullWorkflow = workflow(workflowName) {
+            on {
+                push()
+            }
+
             job(jobName) {
                 checkout()
             }
@@ -20,6 +24,8 @@ internal class WorkflowTest {
         // then
         assert(fullWorkflow).isEqualTo("""
             name: $workflowName
+            
+            on: push
             
             jobs:
               $jobName:

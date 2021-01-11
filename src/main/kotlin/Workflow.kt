@@ -2,20 +2,27 @@ class Workflow(
     private val name: String,
 ) : BlockElement() {
     private val jobs = emptyList<Job>().toMutableList()
+    private lateinit var onEvent: On
 
     fun job(name: String, c: Job.() -> Unit) = jobs.add(Job(name).apply(c))
 
+    fun on(c: On.() -> Unit) {
+        this.onEvent = On().apply(c)
+    }
+
     override fun toString(): String {
-        val jobBlocks = jobs.map {
-            it.toString().indentBlock()
-        }
+        val onBlock = onEvent.toString()
+
+        val jobBlocks = jobs.joinToString(separator = "\n") { it.toString().indentBlock() }
 
         return """
-            name: $name
+name: $name
 
-            jobs:
+$onBlock
 
-        """.trimIndent() + jobBlocks.joinToString(separator = "\n")
+jobs:
+$jobBlocks
+        """.trimIndent()
     }
 }
 

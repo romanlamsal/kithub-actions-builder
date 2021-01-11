@@ -1,12 +1,17 @@
-//INCLUDE ./src/main/kotlin/Workflow.kt
 //INCLUDE ./src/main/kotlin/BlockElement.kt
+//INCLUDE ./src/main/kotlin/On.kt
 //INCLUDE ./src/main/kotlin/Job.Kt
 //INCLUDE ./src/main/kotlin/Step.kt
 //INCLUDE ./src/main/kotlin/Uses.kt
+//INCLUDE ./src/main/kotlin/Workflow.kt
 
 fun gradlew(command: String) = "./gradlew $command"
 
 workflow("build-service-1") {
+    on {
+        push()
+    }
+
     job("build-service-1") {
 
         checkout()
