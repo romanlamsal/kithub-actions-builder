@@ -32,6 +32,11 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     repositories {
         maven {
@@ -51,8 +56,7 @@ publishing {
             setUrl(
                 "https://api.bintray.com/maven/" +
                         "$user/$repoName/$packageName/;" +
-                        "publish=0;" + // Never auto-publish to allow override.
-                        "override=1"
+                        "publish=1"
             )
             credentials {
                 username = user
