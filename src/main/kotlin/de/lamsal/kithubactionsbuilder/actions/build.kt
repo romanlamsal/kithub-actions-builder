@@ -9,7 +9,7 @@ fun main() {
         on {
             push {
                 branches = listOf("main")
-                paths = listOf("src/**/*")
+                paths = listOf("src/main/**/*")
             }
         }
 

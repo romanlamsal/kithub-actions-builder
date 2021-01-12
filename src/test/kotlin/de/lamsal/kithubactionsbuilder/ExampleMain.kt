@@ -1,5 +1,13 @@
 package de.lamsal.kithubactionsbuilder
 
+// Extension function used to declare reusable step in the context of Job
+// check below to see how it's used.
+fun Job.echoAwesome() = apply {
+    step("echo something awesome") {
+        run("echo 'something awesome'.")
+    }
+}
+
 fun main() {
     workflow("build-service-1") {
         on {
@@ -25,7 +33,10 @@ fun main() {
                 run("yarn install")
             }
 
-            // has no name
+            echoAwesome()
+
+            // step without a no name
+            // contains multiple run commands which are concatenated automatically
             step {
                 run("""echo "hallo wie geht's?"""", """echo "danke gut."""")
             }

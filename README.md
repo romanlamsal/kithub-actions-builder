@@ -4,6 +4,10 @@ DSL written in Kotlin to create GitHub actions.
 Could be used to generate github action workflows with the added benefit of type-safety 
 and contextual hints, thanks to Kotlin.
 
+## kscript
+The library can be used with kscript. 
+Simply add ``//DEPS de.lamsal:kithub-actions-builder:1.0.22`` to your .kts file and kscript will be able to pull it.
+
 ## Installation
 This package is available via [jcenter](https://bintray.com/romanlamsal/maven/kithub-actions-builder) or 
 [github packages](https://github.com/romanlamsal/kithub-actions-builder/packages) 
@@ -42,6 +46,14 @@ dependencies {
 ## Example
 The following piece of code contains everything the library currently is capable of.
 ```kotlin
+// Extension function used to declare reusable step in the context of Job
+// check below to see how it's used.
+fun Job.echoAwesome() = apply {
+    step("echo something awesome") {
+        run("echo 'something awesome'.")
+    }
+}
+
 workflow("build-service-1") {
     on {
         push {
@@ -66,7 +78,10 @@ workflow("build-service-1") {
             run("yarn install")
         }
 
-        // has no name
+        echoAwesome()
+
+        // step without a no name
+        // contains multiple run commands which are concatenated automatically
         step {
             run("""echo "hallo wie geht's?"""", """echo "danke gut."""")
         }
@@ -119,6 +134,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: yarn install
+      - name: echo something awesome
+        run: echo 'something awesome'.
       - run: |
           echo "hallo wie geht's?"
           echo "danke gut."
