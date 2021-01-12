@@ -6,6 +6,10 @@ fun main() {
             push()
         }
 
+        env {
+            "bibidi" to "babidi"
+        }
+
         job("build-service-1") {
 
             checkout()
