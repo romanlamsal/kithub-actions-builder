@@ -46,7 +46,7 @@ publishing {
             name = "bintray"
             val user = System.getenv("bintray_user")
             val key = System.getenv("bintray_api_key")
-            val repoName = "kithub-actions-builder"
+            val repoName = "maven"
             val packageName = "kithub-actions-builder"
             setUrl(
                 "https://api.bintray.com/maven/" +
