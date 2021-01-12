@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "de.lamsal"
-version = project.findProperty("version") ?: "1.0"
+version = System.getenv("version") ?: "1.0"
 
 repositories {
     mavenCentral()
@@ -37,8 +37,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/romanlamsal/kithub-actions-builder")
             credentials {
-                username = project.findProperty("username") as String? ?: ""
-                password = project.findProperty("token") as String? ?: ""
+                username = System.getenv("gh_username")
+                password = System.getenv("gh_token")
             }
         }
     }
