@@ -131,7 +131,7 @@ internal class StepTest {
         // when
         val step = Step().apply {
             uses(usesName) {
-                keyValuePair.first being keyValuePair.second
+                keyValuePair.first to keyValuePair.second
             }
         }
 
@@ -155,7 +155,7 @@ internal class StepTest {
         // when
         val step = Step(name = stepName).apply {
             uses(usesName) {
-                keyValuePair.first being keyValuePair.second
+                keyValuePair.first to keyValuePair.second
             }
         }
 
@@ -167,6 +167,30 @@ internal class StepTest {
               with:
                 ${keyValuePair.first}: ${keyValuePair.second}
         """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `should return step with 'run' in addition to 'env'`() {
+        // given
+        val run = "echo 'so great'"
+        val envVar = "foo" to "bar"
+
+        // when
+        val step = Step().apply {
+            runCommands.add(run)
+            env {
+                envVar.first to envVar.second
+            }
+        }
+
+        // then
+        assert(step.toString()).isEqualTo(
+            """
+            - run: $run
+              env:
+                ${envVar.first}: ${envVar.second}
+            """.trimIndent()
         )
     }
 }

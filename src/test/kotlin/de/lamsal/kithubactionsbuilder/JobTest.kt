@@ -16,7 +16,7 @@ internal class JobTest {
         val throwingToString = { Job(name = name, runsOn = runsOn).toString() }
 
         // then
-        assert(throwingToString).thrownError {  }
+        assert(throwingToString).thrownError { }
     }
 
     @Test
@@ -29,12 +29,13 @@ internal class JobTest {
         val job = Job(name = name, runsOn = runsOn).apply { checkout() }
 
         // then
-        assert(job.toString()).isEqualTo("""
+        assert(job.toString()).isEqualTo(
+            """
             $name:
               runs-on: $runsOn
               steps:
                 - uses: actions/checkout@v1
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -61,7 +62,7 @@ internal class JobTest {
               steps:
                 - name: $stepName
                   run: $runCommand
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 }

@@ -15,9 +15,7 @@ internal class UsesTest {
         val result = Uses(name).toString()
 
         // then
-        assert(result).isEqualTo("""
-            uses: $name
-        """.trimIndent())
+        assert(result).isEqualTo("uses: $name\n")
     }
 
     @Test
@@ -27,7 +25,7 @@ internal class UsesTest {
 
         // when
         val uses = Uses(name)
-        uses.with["foo"] = "bar"
+        uses.with.add("foo", "bar")
         val result = uses.toString()
 
         // then

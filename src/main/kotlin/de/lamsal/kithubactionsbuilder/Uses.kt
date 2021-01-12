@@ -3,18 +3,9 @@ package de.lamsal.kithubactionsbuilder
 data class Uses(
     var name: String,
 ) : BlockElement() {
-    var with: MutableMap<String, String> = emptyMap<String, String>().toMutableMap()
-
-    infix fun String.being(that: String) {
-        with[this] = that
-    }
+    val with = ValueMap("with")
 
     override fun toString(): String {
-        return "uses: $name" + if (with.isNotEmpty())
-            "\nwith:\n" + with.entries.joinToString(separator = "\n") {
-                "${it.key}: ${it.value}"
-            }.indentBlock()
-        else
-            ""
+        return "uses: $name\n" + if (with.isNotEmpty()) "$with" else ""
     }
 }

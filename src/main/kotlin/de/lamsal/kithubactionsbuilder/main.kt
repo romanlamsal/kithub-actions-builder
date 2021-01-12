@@ -22,12 +22,15 @@ fun main() {
             step("Uses uses with with") {
                 uses("actions/foo@v1") {
                     // add 'with' declaration by adding key-value-pairs like so
-                    "foo" being "bar"
+                    "foo" to "bar"
                 }
             }
 
-            step("Uses uses with with") {
+            step("Uses uses without with but with env") {
                 uses("actions/bar@v1")
+                env {
+                    "foo" to "bar"
+                }
             }
         }
     }.also { println(it) }
