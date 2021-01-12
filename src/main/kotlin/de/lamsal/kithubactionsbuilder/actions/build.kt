@@ -2,9 +2,9 @@ package de.lamsal.kithubactionsbuilder.actions
 
 import de.lamsal.kithubactionsbuilder.workflow
 
-fun main() {
-    fun gradlew(command: String) = "./gradlew $command"
+fun gradlew(command: String) = "./gradlew $command"
 
+fun main() {
     workflow("build") {
         on {
             push()
@@ -32,6 +32,9 @@ fun main() {
                     "version" to "1.0.\${{ github.run_number }}"
                     "gh_username" to "GitHub"
                     "gh_token" to "\${{ github.token }}"
+                    "bintray_user" to "romanlamsal"
+                    "bintray_api_key" to "\${{ secrets.BINTRAY_API_KEY }}"
+                    "bintray_vcs_url" to "https://github.com/\${{ github.repository }}.git"
                 }
             }
         }

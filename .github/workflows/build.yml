@@ -19,3 +19,6 @@ jobs:
           version: 1.0.${{ github.run_number }}
           gh_username: GitHub
           gh_token: ${{ github.token }}
+          bintray_user: romanlamsal
+          bintray_api_key: ${{ secrets.BINTRAY_API_KEY }}
+          bintray_vcs_url: https://github.com/${{ github.repository }}.git

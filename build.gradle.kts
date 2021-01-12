@@ -11,6 +11,7 @@ group = "de.lamsal"
 version = System.getenv("version") ?: "1.0"
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
@@ -39,6 +40,23 @@ publishing {
             credentials {
                 username = System.getenv("gh_username")
                 password = System.getenv("gh_token")
+            }
+        }
+        maven {
+            name = "bintray"
+            val user = System.getenv("bintray_user")
+            val key = System.getenv("bintray_api_key")
+            val repoName = "kithub-actions-builder"
+            val packageName = "kithub-actions-builder"
+            setUrl(
+                "https://api.bintray.com/maven/" +
+                        "$user/$repoName/$packageName/;" +
+                        "publish=0;" + // Never auto-publish to allow override.
+                        "override=1"
+            )
+            credentials {
+                username = user
+                password = key
             }
         }
     }
