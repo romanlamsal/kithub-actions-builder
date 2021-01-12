@@ -3,7 +3,14 @@ package de.lamsal.kithubactionsbuilder
 fun main() {
     workflow("build-service-1") {
         on {
-            push()
+            push {
+                branches = listOf("foo", "bar")
+                paths = listOf("baz", "foobar")
+            }
+            pullRequest {
+                branches = listOf("lorem", "ipsum")
+                paths = listOf("dolor", "sit amt")
+            }
         }
 
         env {

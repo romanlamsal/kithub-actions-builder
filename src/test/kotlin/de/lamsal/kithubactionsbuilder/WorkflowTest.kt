@@ -27,7 +27,8 @@ internal class WorkflowTest {
         assert(fullWorkflow).isEqualTo("""
             name: $workflowName
             
-            on: push
+            on:
+              push:
             
             jobs:
               $jobName:
@@ -74,7 +75,8 @@ internal class WorkflowTest {
         assert(fullWorkflow).isEqualTo("""
             name: $workflowName
             
-            on: push
+            on:
+              push:
             
             env:
               foo: bar

@@ -7,7 +7,10 @@ fun gradlew(command: String) = "./gradlew $command"
 fun main() {
     workflow("build") {
         on {
-            push()
+            push {
+                branches = listOf("main")
+                paths = listOf("src/**/*")
+            }
         }
 
         job("build") {

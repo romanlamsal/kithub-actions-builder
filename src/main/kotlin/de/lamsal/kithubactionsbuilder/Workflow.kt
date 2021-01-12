@@ -1,5 +1,7 @@
 package de.lamsal.kithubactionsbuilder
 
+import de.lamsal.kithubactionsbuilder.event.On
+
 class Workflow(
     private val name: String,
 ) : BlockElement() {
