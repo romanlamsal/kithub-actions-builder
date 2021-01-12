@@ -12,6 +12,10 @@ workflow("build-service-1") {
         push()
     }
 
+    env {
+        "bibidi" to "babidi"
+    }
+
     job("build-service-1") {
 
         checkout()
@@ -28,14 +32,18 @@ workflow("build-service-1") {
         step("Uses uses with with") {
             uses("actions/foo@v1") {
                 // add 'with' declaration by adding key-value-pairs like so
-                "foo" being "bar"
+                "foo" to "bar"
             }
         }
 
-        step("Uses uses with with") {
+        step("Uses uses without with but with env") {
             uses("actions/bar@v1")
+            env {
+                "foo" to "bar"
+            }
         }
     }
+}
 ```
 
 will produce a ``String`` containing the following:
@@ -44,6 +52,9 @@ will produce a ``String`` containing the following:
 name: build-service-1
 
 on: push
+
+env:
+  bibidi: babidi
 
 jobs:
   build-service-1:
@@ -59,9 +70,8 @@ jobs:
         uses: actions/foo@v1
         with:
           foo: bar
-      - name: Uses uses with with
+      - name: Uses uses without with but with env
         uses: actions/bar@v1
-
-Process finished with exit code 0
-
+        env:
+          foo: bar
 ````
