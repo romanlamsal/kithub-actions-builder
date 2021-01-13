@@ -1,7 +1,9 @@
 package de.lamsal.kithubactionsbuilder
 
-// Extension function used to declare reusable step in the context of Job
-// check below to see how it's used.
+import de.lamsal.kithubactionsbuilder.context.context
+
+// (1) Extension function used to declare reusable step in the context of Job
+// check below to see how it's used .
 fun Job.echoAwesome() = apply {
     step("echo something awesome") {
         run("echo 'something awesome'.")
@@ -33,9 +35,10 @@ fun main() {
                 run("yarn install")
             }
 
+            // (1) custom action invocation
             echoAwesome()
 
-            // step without a no name
+            // step without a name
             // contains multiple run commands which are concatenated automatically
             step {
                 run("""echo "hallo wie geht's?"""", """echo "danke gut."""")
@@ -51,7 +54,13 @@ fun main() {
             step("Uses uses without with but with env") {
                 uses("actions/bar@v1")
                 env {
-                    "foo" to "bar"
+                    // context for convenience. Will surround given VALUE like "${{ VALUE }}".
+                    "foo" to context("env.bar")
+                    "bar" to context.secrets("supersecret")
+
+                    // special github context which can either be called directly or by constant values
+                    "baz" to context.github("token")
+                    "repo" to context.github.repository
                 }
             }
         }

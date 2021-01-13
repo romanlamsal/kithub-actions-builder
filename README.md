@@ -46,8 +46,8 @@ dependencies {
 ## Example
 The following piece of code contains everything the library currently is capable of.
 ```kotlin
-// Extension function used to declare reusable step in the context of Job
-// check below to see how it's used.
+// (1) Extension function used to declare reusable step in the context of Job
+// check below to see how it's used .
 fun Job.echoAwesome() = apply {
     step("echo something awesome") {
         run("echo 'something awesome'.")
@@ -78,9 +78,10 @@ workflow("build-service-1") {
             run("yarn install")
         }
 
+        // (1) custom action invocation
         echoAwesome()
 
-        // step without a no name
+        // step without a name
         // contains multiple run commands which are concatenated automatically
         step {
             run("""echo "hallo wie geht's?"""", """echo "danke gut."""")
@@ -96,7 +97,13 @@ workflow("build-service-1") {
         step("Uses uses without with but with env") {
             uses("actions/bar@v1")
             env {
-                "foo" to "bar"
+                // context for convenience. Will surround given VALUE like "${{ VALUE }}".
+                "foo" to context("env.bar")
+                "bar" to context.secrets("supersecret")
+
+                // special github context which can either be called directly or by constant values
+                "baz" to context.github("token")
+                "repo" to context.github.repository
             }
         }
     }
@@ -106,8 +113,6 @@ workflow("build-service-1") {
 will produce a ``String`` containing the following:
 
 ````yaml
-name: build-service-1
-
 on:
   push:
     branches:
@@ -146,5 +151,8 @@ jobs:
       - name: Uses uses without with but with env
         uses: actions/bar@v1
         env:
-          foo: bar
+          foo: ${{ env.bar }}
+          bar: ${{ secrets.supersecret }}
+          baz: ${{ github.token }}
+          repo: ${{ github.repository }}
 ````
