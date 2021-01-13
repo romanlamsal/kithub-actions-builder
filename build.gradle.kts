@@ -5,6 +5,7 @@ plugins {
     application
     maven
     `maven-publish`
+    id("jacoco")
 }
 
 group = "de.lamsal"
@@ -69,4 +70,11 @@ publishing {
             from(components["java"])
         }
     }
+}
+
+fun JacocoReportsContainer.reports() {
+    xml.isEnabled = true
+    html.isEnabled = true
+    xml.destination = file("${buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+    html.destination = file("${buildDir}/reports/jacoco/jacocoTestReport/html")
 }
