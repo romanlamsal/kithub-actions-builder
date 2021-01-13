@@ -1,5 +1,6 @@
 package de.lamsal.kithubactionsbuilder.actions
 
+import de.lamsal.kithubactionsbuilder.context.context
 import de.lamsal.kithubactionsbuilder.workflow
 
 fun gradlew(command: String) = "./gradlew $command"
@@ -32,12 +33,12 @@ fun main() {
             step("Publish") {
                 run(gradlew("publish"))
                 env {
-                    "version" to "1.0.\${{ github.run_number }}"
+                    "version" to "1.0.${context.github.runNumber}"
                     "gh_username" to "GitHub"
-                    "gh_token" to "\${{ github.token }}"
+                    "gh_token" to context.github.token
                     "bintray_user" to "romanlamsal"
-                    "bintray_api_key" to "\${{ secrets.BINTRAY_API_KEY }}"
-                    "bintray_vcs_url" to "https://github.com/\${{ github.repository }}.git"
+                    "bintray_api_key" to context.secrets("BINTRAY_API_KEY")
+                    "bintray_vcs_url" to "https://github.com/${context.github.repository}.git"
                 }
             }
         }
