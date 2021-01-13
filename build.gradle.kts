@@ -78,3 +78,9 @@ fun JacocoReportsContainer.reports() {
     xml.destination = file("${buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
     html.destination = file("${buildDir}/reports/jacoco/jacocoTestReport/html")
 }
+
+tasks.register<JavaExec>("createWorkflows") {
+    main = "de.lamsal.kithubactionsbuilder.actions.BuildKt"
+    classpath = sourceSets["main"].runtimeClasspath
+    standardOutput = File("$rootDir/.github/workflows/build.yml").outputStream()
+}
