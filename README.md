@@ -84,7 +84,7 @@ workflow("build-service-1") {
         // step without a name
         // contains multiple run commands which are concatenated automatically
         step {
-            run("""echo "hallo wie geht's?"""", """echo "danke gut."""")
+            run('echo "Hey... how you doin'?"', 'echo ";)"')
         }
 
         step("Uses uses with with") {
@@ -142,8 +142,8 @@ jobs:
       - name: echo something awesome
         run: echo 'something awesome'.
       - run: |
-          echo "hallo wie geht's?"
-          echo "danke gut."
+          echo "Hey... how you doin'?"
+          echo ";)"
       - name: Uses uses with with
         uses: actions/foo@v1
         with:
