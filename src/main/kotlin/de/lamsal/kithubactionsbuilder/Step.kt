@@ -3,6 +3,7 @@ package de.lamsal.kithubactionsbuilder
 open class Step(
     private val name: String? = null,
 ) : BlockElement() {
+    var ifExpr: String? = null
     val runCommands = mutableListOf<String>()
     private val envVars = ValueMap("env")
     var uses: Uses? = null
@@ -23,6 +24,7 @@ open class Step(
         val builder = StringBuilder()
 
         if (name != null) builder.append("name: $name\n")
+        if (ifExpr != null) builder.append("if: $ifExpr\n")
         if (uses != null) builder.append(uses.toString())
         when (runCommands.size) {
             0 -> builder.append("")

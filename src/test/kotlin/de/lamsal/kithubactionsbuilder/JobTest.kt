@@ -20,7 +20,7 @@ internal class JobTest {
     }
 
     @Test
-    fun `should have a defaulting checkout action step`() {
+    fun `should have checkout action step`() {
         // given
         val name = "build"
         val runsOn = "ubuntuhuhu"
@@ -59,6 +59,36 @@ internal class JobTest {
             """
             $jobName:
               runs-on: $runsOn
+              steps:
+                - name: $stepName
+                  run: $runCommand
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `should return job with step and if`() {
+        // given
+        val jobName = "build"
+        val runsOn = "ubuntuhuhu"
+        val stepName = "install"
+        val runCommand = "exit 0"
+        val ifExpr = "1 == 0"
+
+        // when
+        val job = Job(name = jobName, runsOn = runsOn).apply {
+            this.ifExpr = ifExpr
+            step(stepName) {
+                run(runCommand)
+            }
+        }
+
+        // then
+        assert(job.toString()).isEqualTo(
+            """
+            $jobName:
+              runs-on: $runsOn
+              if: $ifExpr
               steps:
                 - name: $stepName
                   run: $runCommand

@@ -23,10 +23,14 @@ workflow("build-service-1") {
     }
 
     job("build-service-1") {
+        // if expression for jobs
+        ifExpr = "'foo' != 'bar'"
 
         checkout()
 
         step("Install dependencies") {
+            // if expression for steps
+            ifExpr = "true"
             run("yarn install")
         }
 

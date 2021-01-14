@@ -72,10 +72,14 @@ workflow("build-service-1") {
     }
 
     job("build-service-1") {
+        // if expression for jobs
+        ifExpr = "'foo' != 'bar'"
 
         checkout()
 
         step("Install dependencies") {
+            // if expression for steps
+            ifExpr = "true"
             run("yarn install")
         }
 
@@ -138,9 +142,11 @@ env:
 jobs:
   build-service-1:
     runs-on: ubuntu-latest
+    if: 'foo' != 'bar'
     steps:
       - uses: actions/checkout@v1
       - name: Install dependencies
+        if: true
         run: yarn install
       - name: echo something awesome.
         run: echo 'something awesome'.

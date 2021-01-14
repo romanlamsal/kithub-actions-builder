@@ -20,6 +20,25 @@ internal class StepTest {
     }
 
     @Test
+    fun `should return step with 'run' and 'if'`() {
+        // given
+        val run = "echo 'so great'"
+        val ifExpr = "1 == 1"
+
+        // when
+        val step = Step().apply {
+            runCommands.add(run)
+            this.ifExpr = ifExpr
+        }
+
+        // then
+        assert(step.toString()).isEqualTo("""
+            - if: $ifExpr
+              run: $run
+        """.trimIndent())
+    }
+
+    @Test
     fun `should throw when step has neither 'uses' nor 'run' return step with name`() {
         // given
         val name = "awesome-name"

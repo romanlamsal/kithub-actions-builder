@@ -1,0 +1,46 @@
+name: build-service-1
+
+on:
+  push:
+    branches:
+      - foo
+      - bar
+    paths:
+      - baz
+      - foobar
+  pull_request:
+    branches:
+      - lorem
+      - ipsum
+    paths:
+      - dolor
+      - sit amt
+
+env:
+  bibidi: babidi
+
+jobs:
+  build-service-1:
+    runs-on: ubuntu-latest
+    if: 'foo' != 'bar'
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        if: true
+        run: yarn install
+      - name: echo something awesome.
+        run: echo 'something awesome'.
+      - run: |
+          echo "Hey... how you doin?"
+          echo ";)"
+      - name: Uses uses with with
+        uses: actions/foo@v1
+        with:
+          foo: bar
+      - name: Uses uses without with but with env
+        uses: actions/bar@v1
+        env:
+          foo: ${{ env.bar }}
+          bar: ${{ secrets.supersecret }}
+          baz: ${{ github.token }}
+          repo: ${{ github.repository }}
