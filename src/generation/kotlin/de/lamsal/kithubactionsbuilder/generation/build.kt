@@ -1,4 +1,4 @@
-package de.lamsal.kithubactionsbuilder.actions
+package de.lamsal.kithubactionsbuilder.generation
 
 import de.lamsal.kithubactionsbuilder.context.context
 import de.lamsal.kithubactionsbuilder.workflow

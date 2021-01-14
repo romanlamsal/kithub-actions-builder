@@ -25,6 +25,13 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
 }
 
+sourceSets {
+    create("generation") {
+        compileClasspath += sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().output
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
 }
@@ -80,7 +87,7 @@ fun JacocoReportsContainer.reports() {
 }
 
 tasks.register<JavaExec>("createWorkflows") {
-    main = "de.lamsal.kithubactionsbuilder.actions.BuildKt"
-    classpath = sourceSets["main"].runtimeClasspath
+    main = "de.lamsal.kithubactionsbuilder.generation.BuildKt"
+    classpath = sourceSets["generation"].runtimeClasspath
     standardOutput = File("$rootDir/.github/workflows/build.yml").outputStream()
 }

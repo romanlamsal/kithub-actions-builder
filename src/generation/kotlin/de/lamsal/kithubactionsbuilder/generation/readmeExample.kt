@@ -1,10 +1,12 @@
-package de.lamsal.kithubactionsbuilder
+package de.lamsal.kithubactionsbuilder.generation
 
+import de.lamsal.kithubactionsbuilder.Job
 import de.lamsal.kithubactionsbuilder.context.context
+import de.lamsal.kithubactionsbuilder.workflow
 
 // (1) Extension function used to declare reusable step in the context of Job
 // check below to see how it's used .
-fun Job.echoAwesome() = apply {
+fun Job.echoAwesome() {
     step("echo something awesome") {
         run("echo 'something awesome'.")
     }
