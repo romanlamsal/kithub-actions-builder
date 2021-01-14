@@ -67,6 +67,32 @@ internal class JobTest {
     }
 
     @Test
+    fun `should return 'ubuntu-latest' as default runsOn`() {
+        // given
+        val jobName = "build"
+        val stepName = "install"
+        val runCommand = "exit 0"
+
+        // when
+        val job = Job(name = jobName).apply {
+            step(stepName) {
+                run(runCommand)
+            }
+        }
+
+        // then
+        assert(job.toString()).isEqualTo(
+            """
+            $jobName:
+              runs-on: ubuntu-latest
+              steps:
+                - name: $stepName
+                  run: $runCommand
+            """.trimIndent()
+        )
+    }
+
+    @Test
     fun `should return job with step and if`() {
         // given
         val jobName = "build"

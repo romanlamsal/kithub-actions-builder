@@ -3,11 +3,11 @@ package de.lamsal.kithubactionsbuilder
 import java.lang.StringBuilder
 
 data class Job(
-    val name: String? = null,
-    val runsOn: String = "ubuntu-latest",
+    private val name: String,
+    private val runsOn: String = "ubuntu-latest",
 ) : BlockElement() {
     var ifExpr: String? = null
-    private val steps = emptyList<Step>().toMutableList()
+    private val steps = mutableListOf<Step>()
 
     fun step(name: String? = null, c: Step.() -> Unit) = steps.add(Step(name).apply(c))
 

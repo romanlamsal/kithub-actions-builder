@@ -39,6 +39,22 @@ internal class StepTest {
     }
 
     @Test
+    fun `should return step with 'uses'`() {
+        // given
+        val uses = "actions/successfull-test@v1"
+
+        // when
+        val step = Step().apply {
+            uses(uses)
+        }
+
+        // then
+        assert(step.toString()).isEqualTo("""
+            - uses: $uses
+        """.trimIndent())
+    }
+
+    @Test
     fun `should throw when step has neither 'uses' nor 'run' return step with name`() {
         // given
         val name = "awesome-name"

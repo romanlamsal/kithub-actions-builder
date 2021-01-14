@@ -1,7 +1,7 @@
 package de.lamsal.kithubactionsbuilder
 
 data class Uses(
-    var name: String,
+    private val name: String,
 ) : BlockElement() {
     val with = ValueMap("with")
 
