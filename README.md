@@ -45,11 +45,12 @@ dependencies {
 
 ## Example
 The following piece of code contains everything the library currently is capable of.
+<!--EXAMPLECODE-->
 ```kotlin
 // (1) Extension function used to declare reusable step in the context of Job
 // check below to see how it's used .
-fun Job.echoAwesome() = apply {
-    step("echo something awesome") {
+fun Job.echoAwesome() {
+    step("echo something awesome.") {
         run("echo 'something awesome'.")
     }
 }
@@ -84,7 +85,7 @@ workflow("build-service-1") {
         // step without a name
         // contains multiple run commands which are concatenated automatically
         step {
-            run('echo "Hey... how you doin'?"', 'echo ";)"')
+            run("echo \"Hey... how you doin?\"", "echo \";)\"")
         }
 
         step("Uses uses with with") {
@@ -111,8 +112,10 @@ workflow("build-service-1") {
 ```
 
 will produce a ``String`` containing the following:
+<!--EXAMPLECODE-->
+```yaml
+name: build-service-1
 
-````yaml
 on:
   push:
     branches:
@@ -139,10 +142,10 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies
         run: yarn install
-      - name: echo something awesome
+      - name: echo something awesome.
         run: echo 'something awesome'.
       - run: |
-          echo "Hey... how you doin'?"
+          echo "Hey... how you doin?"
           echo ";)"
       - name: Uses uses with with
         uses: actions/foo@v1
@@ -155,4 +158,5 @@ jobs:
           bar: ${{ secrets.supersecret }}
           baz: ${{ github.token }}
           repo: ${{ github.repository }}
-````
+
+```

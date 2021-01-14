@@ -11,6 +11,8 @@ plugins {
 group = "de.lamsal"
 version = System.getenv("version") ?: "1.0"
 
+// apply(from = "readme.gradle.kts")
+
 repositories {
     jcenter()
     mavenCentral()
@@ -90,4 +92,53 @@ tasks.register<JavaExec>("createWorkflows") {
     main = "de.lamsal.kithubactionsbuilder.generation.BuildKt"
     classpath = sourceSets["generation"].runtimeClasspath
     standardOutput = File("$rootDir/.github/workflows/build.yml").outputStream()
+}
+
+tasks.register("extractExampleCode") {
+    group = "documentation"
+
+    val exampleCode = File("$rootDir/src/generation/kotlin/de/lamsal/kithubactionsbuilder/generation/readmeExample.kt")
+        .readText().let {
+            "//README-CODE(.*)//README-CODE"
+                .toRegex(setOf(RegexOption.MULTILINE, RegexOption.COMMENTS, RegexOption.DOT_MATCHES_ALL))
+                .find(it)!!.groupValues[1].trimIndent()
+        }
+    File("$rootDir/examples/readmeExampleCode.kts").writeText(exampleCode)
+}
+
+tasks.register<JavaExec>("executeExampleCode") {
+    group = "documentation"
+    main = "de.lamsal.kithubactionsbuilder.generation.ReadmeExampleKt"
+    classpath = sourceSets["generation"].runtimeClasspath
+    standardOutput = File("$rootDir/examples/readmeExampleOutput.yml").outputStream()
+}
+
+tasks.register("updateReadme") {
+    group = "documentation"
+    dependsOn(":extractExampleCode")
+    dependsOn(":executeExampleCode")
+
+    doLast {
+        File("$rootDir/README.md").apply {
+            val content = readText().let { content ->
+                fun replaceExampleCode(fileLoc: String, type: String): (String) -> String {
+                    return {
+                        val replacement = File(fileLoc).readText()
+                        "<!--EXAMPLECODE-->\n```$type([^```]*)```"
+                            .toRegex(setOf(RegexOption.MULTILINE, RegexOption.DOT_MATCHES_ALL))
+                            .replace(it) {
+                                "<!--EXAMPLECODE-->\n```$type\n$replacement\n```"
+                            }
+                    }
+                }
+
+                listOf(
+                    replaceExampleCode("$rootDir/examples/readmeExampleCode.kts", "kotlin"),
+                    replaceExampleCode("$rootDir/examples/readmeExampleOutput.yml", "yaml")
+                ).fold(initial = content) { acc, it -> it(acc) }
+            }
+
+            writeText(content)
+        }
+    }
 }

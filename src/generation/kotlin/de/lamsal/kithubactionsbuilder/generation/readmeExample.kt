@@ -4,15 +4,17 @@ import de.lamsal.kithubactionsbuilder.Job
 import de.lamsal.kithubactionsbuilder.context.context
 import de.lamsal.kithubactionsbuilder.workflow
 
-// (1) Extension function used to declare reusable step in the context of Job
-// check below to see how it's used .
-fun Job.echoAwesome() {
-    step("echo something awesome") {
-        run("echo 'something awesome'.")
-    }
-}
 
 fun main() {
+    //README-CODE
+    // (1) Extension function used to declare reusable step in the context of Job
+    // check below to see how it's used .
+    fun Job.echoAwesome() {
+        step("echo something awesome.") {
+            run("echo 'something awesome'.")
+        }
+    }
+
     workflow("build-service-1") {
         on {
             push {
@@ -43,7 +45,7 @@ fun main() {
             // step without a name
             // contains multiple run commands which are concatenated automatically
             step {
-                run("""echo "hallo wie geht's?"""", """echo "danke gut."""")
+                run("echo \"Hey... how you doin?\"", "echo \";)\"")
             }
 
             step("Uses uses with with") {
@@ -66,5 +68,6 @@ fun main() {
                 }
             }
         }
-    }.also { println(it) }
+    }//README-CODE
+        .also { println(it) }
 }
