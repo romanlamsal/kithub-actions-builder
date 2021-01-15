@@ -6,7 +6,7 @@ data class Job(
     private val name: String,
     private val runsOn: String = "ubuntu-latest",
 ) : BlockElement() {
-    var ifExpr: String? = null
+    var ifExpr: String by IfExpr(indent = 2)
     private val steps = mutableListOf<Step>()
 
     fun step(name: String? = null, c: Step.() -> Unit) = steps.add(Step(name).apply(c))
@@ -15,14 +15,17 @@ data class Job(
         uses = Uses("actions/checkout@v1")
     })
 
-    override fun toString(): String {
+    override fun toString(): String = with(StringBuilder()) {
         assert(steps.isNotEmpty())
 
-        return StringBuilder().apply {
-            appendLine("$name:")
-            appendLine("  runs-on: $runsOn")
-            if (ifExpr != null) appendLine("  if: $ifExpr")
-            appendLine("  steps:")
-        }.toString() + steps.joinToString(separator = "\n") { it.toString().indentBlock(4) }
+        appendLine("$name:")
+        appendLine("  runs-on: $runsOn")
+        append(ifExpr)
+        appendLine("  steps:")
+        append(steps.indent())
+    }.toString()
+
+    private fun MutableList<Step>.indent(): String {
+        return joinToString(separator = "\n") { it.toString().indentBlock(4) }
     }
 }
