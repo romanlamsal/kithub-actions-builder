@@ -15,7 +15,7 @@ internal class UsesTest {
         val result = Uses(name).toString()
 
         // then
-        assert(result).isEqualTo("uses: $name\n")
+        assert(result).isEqualTo("uses: $name")
     }
 
     @Test

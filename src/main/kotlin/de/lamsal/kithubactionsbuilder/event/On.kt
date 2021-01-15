@@ -11,7 +11,8 @@ class On : BlockElement() {
 
     private fun addCodeEvent(type: String, c: CodeEvent.() -> Unit = {}) = events.add(CodeEvent(type).apply(c))
 
-    override fun toString(): String {
-        return "on:\n" + events.joinToString(separator = "\n") { it.toString().indentBlock() }
+    override fun toString(): String = toYaml {
+        appendLine("on:")
+        append(events.joinToString(separator = "\n") { it.toString().indentBlock() })
     }
 }

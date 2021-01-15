@@ -1,7 +1,5 @@
 package de.lamsal.kithubactionsbuilder
 
-import java.lang.StringBuilder
-
 data class Job(
     private val name: String,
     private val runsOn: String = "ubuntu-latest",
@@ -15,7 +13,7 @@ data class Job(
         uses = Uses("actions/checkout@v1")
     })
 
-    override fun toString(): String = with(StringBuilder()) {
+    override fun toString(): String = toYaml {
         assert(steps.isNotEmpty())
 
         appendLine("$name:")
@@ -23,7 +21,7 @@ data class Job(
         append(ifExpr)
         appendLine("  steps:")
         append(steps.indent())
-    }.toString()
+    }
 
     private fun MutableList<Step>.indent(): String {
         return joinToString(separator = "\n") { it.toString().indentBlock(4) }

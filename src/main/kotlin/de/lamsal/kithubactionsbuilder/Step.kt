@@ -18,12 +18,13 @@ open class Step(
 
     fun env(c: ValueMap.() -> Unit) = envVars.apply(c)
 
-    override fun toString(): String = with(StringBuilder()) {
+    override fun toString(): String = toYaml {
         assert(uses != null || runCommands.isNotEmpty())
 
-        if (name != null) appendLine("name: $name")
+        appendLineNonNull(name) { "name: $name" }
         append(ifExpr)
-        if (uses != null) append(uses.toString())
+
+        appendNonNull(uses)
         when (runCommands.size) {
             0 -> append("")
             1 -> appendLine("run: ${runCommands[0]}")
@@ -31,5 +32,5 @@ open class Step(
         }
 
         append(envVars)
-    }.toString().indentBlock().replaceFirst(" ", "-").trimEnd()
+    }.indentBlock().replaceFirst(" ", "-")
 }

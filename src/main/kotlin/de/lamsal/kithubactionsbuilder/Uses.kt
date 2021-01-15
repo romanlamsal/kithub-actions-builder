@@ -5,7 +5,8 @@ data class Uses(
 ) : BlockElement() {
     val with = ValueMap("with")
 
-    override fun toString(): String {
-        return "uses: $name\n" + if (with.isNotEmpty()) "$with" else ""
+    override fun toString(): String = toYaml {
+        appendLine("uses: $name")
+        appendNonEmpty(with)
     }
 }

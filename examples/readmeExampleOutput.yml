@@ -38,8 +38,7 @@ jobs:
         with:
           foo: bar
       - name: Uses uses without with but with env
-        uses: actions/bar@v1
-        env:
+        uses: actions/bar@v1env:
           foo: ${{ env.bar }}
           bar: ${{ secrets.supersecret }}
           baz: ${{ github.token }}

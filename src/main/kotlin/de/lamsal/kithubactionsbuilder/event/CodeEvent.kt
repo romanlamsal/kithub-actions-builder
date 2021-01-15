@@ -4,15 +4,10 @@ open class CodeEvent(type: String) : WorkflowEvent(type) {
     var branches = emptyList<String>()
     var paths = emptyList<String>()
 
-    override fun toString(): String {
-        val builder = StringBuilder()
-
-        builder.append("$type:")
-
-        builder.append(branches.toBlock("branches"))
-        builder.append(paths.toBlock("paths"))
-
-        return builder.toString()
+    override fun toString(): String = toYaml {
+        append("$type:")
+        append(branches.toBlock("branches"))
+        append(paths.toBlock("paths"))
     }
 
     private fun List<String>.toBlock(blockType: String): String {

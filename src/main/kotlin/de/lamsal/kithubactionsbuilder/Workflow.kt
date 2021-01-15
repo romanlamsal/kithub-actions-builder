@@ -15,19 +15,15 @@ class Workflow(
         this.onEvent = On().apply(c)
     }
 
-    override fun toString(): String {
+    override fun toString(): String = toYaml {
         val onBlock = onEvent.toString()
 
         val jobBlocks = jobs.joinToString(separator = "\n") { it.toString().indentBlock() }
 
-        return """
-name: $name
-
-$onBlock
-${if (envVars.isNotEmpty()) "\n$envVars\n" else ""}
-jobs:
-$jobBlocks
-        """.trimIndent()
+        appendLine("name: $name\n")
+        appendLine(onBlock)
+        appendLineNonEmpty(envVars) { "\n$envVars" }
+        appendLine("\njobs:\n$jobBlocks")
     }
 
     fun env(c: ValueMap.() -> Unit) = envVars.apply(c)
