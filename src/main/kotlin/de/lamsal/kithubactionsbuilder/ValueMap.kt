@@ -1,14 +1,14 @@
 package de.lamsal.kithubactionsbuilder
 
-class ValueMap(
+open class ValueMap(
     private val prefix: String,
     val indent: Int = 2,
     private val givenValues: MutableMap<String, String> = mutableMapOf()
-) : MutableMap<String, String> by givenValues {
+) : MutableMap<String, String> by givenValues, BlockElement() {
 
     fun add(key: String, value: String) = givenValues.put(key, value)
 
-    fun isNotEmpty(): Boolean = givenValues.isNotEmpty()
+    open fun isNotEmpty(): Boolean = givenValues.isNotEmpty()
 
     infix fun String.to(that: String) {
         givenValues[this] = that

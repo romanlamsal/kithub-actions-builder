@@ -8,12 +8,15 @@ class Workflow(
     private val jobs = emptyList<Job>().toMutableList()
     private lateinit var onEvent: On
     private val envVars = ValueMap("env")
+    private val defaults = Defaults()
 
     fun job(name: String, c: Job.() -> Unit) = jobs.add(Job(name).apply(c))
 
     fun on(c: On.() -> Unit) {
         this.onEvent = On().apply(c)
     }
+
+    fun defaults(c: Defaults.() -> Unit) = defaults.apply(c)
 
     override fun toString(): String = toYaml {
         val onBlock = onEvent.toString()
@@ -22,6 +25,7 @@ class Workflow(
 
         appendLine("name: $name\n")
         appendLine(onBlock)
+        appendLineNonEmpty(defaults) { "\n$defaults" }
         appendLineNonEmpty(envVars) { "\n$envVars" }
         appendLine("\njobs:\n$jobBlocks")
     }

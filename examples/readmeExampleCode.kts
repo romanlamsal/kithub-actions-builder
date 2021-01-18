@@ -18,6 +18,13 @@ workflow("build-service-1") {
         }
     }
 
+    defaults {
+        "foobar" to "barbaz"
+        run {
+            "working-directory" to "scripts"
+        }
+    }
+
     env {
         "bibidi" to "babidi"
     }

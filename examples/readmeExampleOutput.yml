@@ -16,6 +16,11 @@ on:
       - dolor
       - sit amt
 
+defaults:
+  foobar: barbaz
+  run:
+    working-directory: scripts
+
 env:
   bibidi: babidi
 
