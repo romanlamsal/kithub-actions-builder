@@ -10,7 +10,7 @@ data class Job(
     fun step(name: String? = null, c: Step.() -> Unit) = steps.add(Step(name).apply(c))
 
     fun checkout() = steps.add(Step().apply {
-        uses = Uses("actions/checkout@v1")
+        uses = Uses("actions/checkout@v2")
     })
 
     override fun toString(): String = toYaml {

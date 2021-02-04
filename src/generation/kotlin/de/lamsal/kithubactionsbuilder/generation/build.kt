@@ -2,6 +2,7 @@ package de.lamsal.kithubactionsbuilder.generation
 
 import de.lamsal.kithubactionsbuilder.context.context
 import de.lamsal.kithubactionsbuilder.workflow
+import java.io.File
 
 fun gradlew(command: String) = "./gradlew $command"
 
@@ -42,5 +43,5 @@ fun main() {
                 }
             }
         }
-    }.also { println(it) }
+    }.also { File("${System.getenv("rootDir")}/.github/workflows/build.yml").writeText(it) }
 }

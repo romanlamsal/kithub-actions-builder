@@ -91,7 +91,8 @@ fun JacocoReportsContainer.reports() {
 tasks.register<JavaExec>("createWorkflows") {
     main = "de.lamsal.kithubactionsbuilder.generation.BuildKt"
     classpath = sourceSets["generation"].runtimeClasspath
-    standardOutput = File("$rootDir/.github/workflows/build.yml").outputStream()
+    environment("rootDir", rootDir)
+    group = "workflow"
 }
 
 tasks.register("extractExampleCode") {
@@ -141,4 +142,10 @@ tasks.register("updateReadme") {
             writeText(content)
         }
     }
+}
+
+tasks.register("update") {
+    group = "verification"
+    dependsOn("updateReadme")
+    dependsOn("createWorkflows")
 }

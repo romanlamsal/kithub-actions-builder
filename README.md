@@ -156,7 +156,7 @@ jobs:
     runs-on: ubuntu-latest
     if: 'foo' != 'bar'
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Install dependencies
         if: true
         run: yarn install
