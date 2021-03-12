@@ -175,5 +175,4 @@ jobs:
           bar: ${{ secrets.supersecret }}
           baz: ${{ github.token }}
           repo: ${{ github.repository }}
-
 ```

@@ -228,4 +228,28 @@ internal class StepTest {
             """.trimIndent()
         )
     }
+
+    @Test
+    fun `should return step with 'uses' in addition to 'env'`() {
+        // given
+        val usedAction = "actions/something@v1"
+        val envVar = "foo" to "bar"
+
+        // when
+        val step = Step().apply {
+            uses(usedAction)
+            env {
+                envVar.first to envVar.second
+            }
+        }
+
+        // then
+        assert(step.toString()).isEqualTo(
+            """
+            - uses: $usedAction
+              env:
+                ${envVar.first}: ${envVar.second}
+            """.trimIndent()
+        )
+    }
 }

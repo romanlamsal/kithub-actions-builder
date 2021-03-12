@@ -24,7 +24,7 @@ open class Step(
         appendLineNonNull(name) { "name: $name" }
         append(ifExpr)
 
-        appendNonNull(uses)
+        appendNonNull(uses) { "$uses\n"}
         when (runCommands.size) {
             0 -> append("")
             1 -> appendLine("run: ${runCommands[0]}")

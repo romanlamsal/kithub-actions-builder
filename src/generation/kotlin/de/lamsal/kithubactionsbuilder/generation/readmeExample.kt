@@ -3,6 +3,7 @@ package de.lamsal.kithubactionsbuilder.generation
 import de.lamsal.kithubactionsbuilder.Job
 import de.lamsal.kithubactionsbuilder.context.context
 import de.lamsal.kithubactionsbuilder.workflow
+import java.io.File
 
 
 fun main() {
@@ -80,5 +81,5 @@ fun main() {
             }
         }
     }//README-CODE
-        .also { println(it) }
+        .also { File(System.getenv("rootDir") + "/examples/readmeExampleOutput.yml").writeText(it) }
 }

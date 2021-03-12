@@ -111,7 +111,7 @@ tasks.register<JavaExec>("executeExampleCode") {
     group = "documentation"
     main = "de.lamsal.kithubactionsbuilder.generation.ReadmeExampleKt"
     classpath = sourceSets["generation"].runtimeClasspath
-    standardOutput = File("$rootDir/examples/readmeExampleOutput.yml").outputStream()
+    environment("rootDir", rootDir)
 }
 
 tasks.register("updateReadme") {
