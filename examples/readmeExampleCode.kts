@@ -58,7 +58,9 @@ workflow("build-service-1") {
         }
 
         step("Uses uses without with but with env") {
-            uses("actions/bar@v1")
+            uses("actions/bar@v1") {
+                "something" to "anything"
+            }
             env {
                 // context for convenience. Will surround given VALUE like "${{ VALUE }}".
                 "foo" to context("env.bar")

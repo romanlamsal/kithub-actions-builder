@@ -2,7 +2,7 @@ package de.lamsal.kithubactionsbuilder
 
 data class Job(
     private val name: String,
-    private val runsOn: String = "ubuntu-latest",
+    var runsOn: String = "ubuntu-latest",
 ) : BlockElement() {
     var ifExpr: String by IfExpr(indent = 2)
     private val steps = mutableListOf<Step>()

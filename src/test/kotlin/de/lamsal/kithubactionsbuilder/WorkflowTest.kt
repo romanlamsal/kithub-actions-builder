@@ -11,6 +11,7 @@ internal class WorkflowTest {
         // given
         val workflowName = "build-service-1"
         val jobName = "build-service-1-job"
+        val runsOn = "haselnuss"
 
         // when
         val fullWorkflow = workflow(workflowName) {
@@ -19,6 +20,7 @@ internal class WorkflowTest {
             }
 
             job(jobName) {
+                this.runsOn = runsOn
                 checkout()
             }
         }
@@ -32,7 +34,7 @@ internal class WorkflowTest {
             
             jobs:
               $jobName:
-                runs-on: ubuntu-latest
+                runs-on: $runsOn
                 steps:
                   - uses: actions/checkout@v2
         """.trimIndent())

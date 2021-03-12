@@ -107,7 +107,9 @@ workflow("build-service-1") {
         }
 
         step("Uses uses without with but with env") {
-            uses("actions/bar@v1")
+            uses("actions/bar@v1") {
+                "something" to "anything"
+            }
             env {
                 // context for convenience. Will surround given VALUE like "${{ VALUE }}".
                 "foo" to context("env.bar")
@@ -170,7 +172,10 @@ jobs:
         with:
           foo: bar
       - name: Uses uses without with but with env
-        uses: actions/bar@v1env:
+        uses: actions/bar@v1
+        with:
+          something: anything
+        env:
           foo: ${{ env.bar }}
           bar: ${{ secrets.supersecret }}
           baz: ${{ github.token }}
